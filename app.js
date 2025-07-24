@@ -3,7 +3,6 @@ const cors = require("cors");
 
 const app = express();
 const PORT = 5000;
-
 app.use(cors());
 app.use(express.json());
 
@@ -426,22 +425,23 @@ const products = {
   success: true,
 };
 
-// Routes
+app.use(cors());
+app.use(express.json());
+
+// GET all products
 app.get("/products", (req, res) => {
   res.json(products);
 });
 
+// GET product by ID
 app.get("/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  if (!product) return res.status(404).json({ error: "Product not found" });
+  const product = products.find((p) => p.id === req.params.id);
+  if (!product) {
+    return res.status(404).json({ error: "Product not found" });
+  }
   res.json(product);
 });
 
-app.get("/orders", (req, res) => {
-  res.json(orders);
-});
-
-// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
