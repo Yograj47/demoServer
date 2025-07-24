@@ -435,7 +435,8 @@ app.get("/products", (req, res) => {
 
 // GET product by ID
 app.get("/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
+  const onlyProduct = products.data.products;
+  const product = onlyProduct.find((p) => p._id === req.params.id);
   if (!product) {
     return res.status(404).json({ error: "Product not found" });
   }
